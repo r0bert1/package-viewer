@@ -1,5 +1,6 @@
 const fs = require('fs')
 const readline = require('readline')
+const http = require('http')
 
 let packages = []
 
@@ -11,3 +12,13 @@ readline.createInterface({
     packages.push(line.slice(9))
   }
 })
+
+const server = http.createServer((request, response) => {
+  if (request.url === '/') {
+    const sortedPackages = packages.sort()
+    response.write(JSON.stringify(sortedPackages))
+    response.end()
+  }
+})
+
+server.listen(3000)
