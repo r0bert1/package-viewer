@@ -1,0 +1,24 @@
+{
+  "name": "package-viewer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "watch": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/r0bert1/package-viewer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/r0bert1/package-viewer/issues"
+  },
+  "homepage": "https://github.com/r0bert1/package-viewer#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
