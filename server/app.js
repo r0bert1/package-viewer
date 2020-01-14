@@ -6,7 +6,7 @@ const packages = [];
 
 readline
   .createInterface({
-    input: fs.createReadStream('status.real'),
+    input: fs.createReadStream('server/assets/status.real'),
     terminal: false
   })
   .on('line', line => {
