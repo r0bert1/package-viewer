@@ -1,6 +1,10 @@
 const fs = require('fs');
 const readline = require('readline');
-const http = require('http');
+const express = require('express');
+const cors = require('cors');
+
+const app = express();
+app.use(cors());
 
 const packages = [];
 
@@ -15,12 +19,8 @@ readline
     }
   });
 
-const server = http.createServer((request, response) => {
-  if (request.url === '/') {
-    const sortedPackages = packages.sort();
-    response.write(JSON.stringify(sortedPackages));
-    response.end();
-  }
+app.get('/api/packages', (req, res) => {
+  res.send(packages.sort());
 });
 
-server.listen(3001);
+app.listen(3001);
