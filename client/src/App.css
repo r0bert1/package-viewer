@@ -2,10 +2,6 @@
   display: flex;
 }
 
-.list {
-  flex: 1;
-}
-
-.info {
+.list+.info {
   flex: 1;
 }
