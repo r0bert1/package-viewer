@@ -2,6 +2,7 @@
   display: flex;
 }
 
-.list+.info {
+.list,
+.info {
   flex: 1;
 }
