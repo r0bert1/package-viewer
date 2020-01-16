@@ -1,19 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import axios from 'axios';
+
+const PackageInfo = ({ selected }) => {
+  if (!selected) {
+    return null;
+  }
+
+  return (
+    <div>
+      <p>{selected.name}</p>
+      <p>{selected.desc}</p>
+    </div>
+  );
+};
 
 const App = () => {
   const [packages, setPackages] = useState([]);
+  const [selected, setSelected] = useState(null);
 
   useEffect(() => {
     const getPackages = async () => {
-      const response = await axios.get('http://localhost:3001/api/packages');
-      setPackages(response.data);
+      const response = await fetch('http://localhost:3001/api/packages');
+      const data = await response.json();
+      setPackages(data);
     };
     getPackages();
   }, []);
-
-  const findPackage = name => packages.find(pkg => pkg.name === name);
 
   const columnStyle = {
     display: 'flex'
@@ -28,13 +40,23 @@ const App = () => {
       <div style={itemStyle}>
         <ul>
           {packages.map(pkg => (
-            <li key={pkg.name}>{pkg.name}</li>
+            <li key={pkg.name}>
+              <a
+                href={pkg.name}
+                onClick={event => {
+                  event.preventDefault();
+                  setSelected(pkg);
+                }}
+              >
+                {pkg.name}
+              </a>
+            </li>
           ))}
         </ul>
       </div>
       {packages.length > 0 ? (
         <div style={itemStyle}>
-          <p>{findPackage('accountsservice').desc}</p>
+          <PackageInfo selected={selected} />
         </div>
       ) : (
         <div />
