@@ -1,16 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
+const columnStyle = {
+  display: 'flex'
+};
+
+const itemStyle = {
+  flex: '1'
+};
+
+const PackageList = ({ packages, setSelected }) => {
+  return (
+    <>
+      <ul>
+        {packages.map(pkg => (
+          <li key={pkg.name}>
+            <a
+              href={pkg.name}
+              onClick={event => {
+                event.preventDefault();
+                setSelected(pkg);
+              }}
+            >
+              {pkg.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+};
+
 const PackageInfo = ({ selected }) => {
   if (!selected) {
     return null;
   }
 
   return (
-    <div>
+    <>
       <p>{selected.name}</p>
       <p>{selected.desc}</p>
-    </div>
+    </>
   );
 };
 
@@ -27,40 +57,14 @@ const App = () => {
     getPackages();
   }, []);
 
-  const columnStyle = {
-    display: 'flex'
-  };
-
-  const itemStyle = {
-    flex: '1'
-  };
-
   return (
     <div style={columnStyle}>
       <div style={itemStyle}>
-        <ul>
-          {packages.map(pkg => (
-            <li key={pkg.name}>
-              <a
-                href={pkg.name}
-                onClick={event => {
-                  event.preventDefault();
-                  setSelected(pkg);
-                }}
-              >
-                {pkg.name}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <PackageList packages={packages} setSelected={setSelected} />
       </div>
-      {packages.length > 0 ? (
-        <div style={itemStyle}>
-          <PackageInfo selected={selected} />
-        </div>
-      ) : (
-        <div />
-      )}
+      <div style={itemStyle}>
+        <PackageInfo selected={selected} />
+      </div>
     </div>
   );
 };
