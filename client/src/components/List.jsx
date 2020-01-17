@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-const List = ({ packages, setSelected }) => {
+const List = ({ setSelected }) => {
+  const [packages, setPackages] = useState([]);
+
+  useEffect(() => {
+    const getPackages = async () => {
+      const response = await fetch('http://localhost:3001/api/packages');
+      const data = await response.json();
+      setPackages(data);
+    };
+    getPackages();
+  }, []);
+
   return (
     <>
       <ul>
