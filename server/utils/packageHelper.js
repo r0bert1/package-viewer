@@ -2,32 +2,19 @@ const { createReadStream } = require('fs');
 const { createInterface } = require('readline');
 const { once } = require('events');
 
-const processPackages = async () => {
-  const packages = [];
-  try {
-    const rl = createInterface({
-      input: createReadStream('server/assets/status.real'),
-      crlfDelay: Infinity
-    });
+const packages = [];
 
-    rl.on('line', line => {
-      if (line.startsWith('Package:')) {
-        packages.push({ name: line.slice(9) });
-      } else if (line.startsWith('Description:')) {
-        packages[packages.length - 1].desc = line.slice(13);
-      } else if (line.startsWith(' ')) {
-        packages[packages.length - 1].desc += line;
-      }
-    });
-
-    await once(rl, 'close');
-  } catch (err) {
-    console.error(err);
+const parse = line => {
+  if (line.startsWith('Package:')) {
+    packages.push({ name: line.slice(9) });
+  } else if (line.startsWith('Description:')) {
+    packages[packages.length - 1].desc = line.slice(13);
+  } else if (line.startsWith(' ')) {
+    packages[packages.length - 1].desc += line;
   }
-  return packages;
 };
 
-const sort = packages => {
+const sort = () => {
   return packages.sort((pkg1, pkg2) => {
     if (pkg1.name < pkg2.name) {
       return -1;
@@ -39,4 +26,23 @@ const sort = packages => {
   });
 };
 
-module.exports = { processPackages, sort };
+const processPackages = async () => {
+  try {
+    const rl = createInterface({
+      input: createReadStream('server/assets/status.real'),
+      crlfDelay: Infinity
+    });
+
+    rl.on('line', line => {
+      parse(line);
+    });
+
+    await once(rl, 'close');
+  } catch (err) {
+    console.error(err);
+  }
+  sort();
+  return packages;
+};
+
+module.exports = { processPackages };
