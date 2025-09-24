@@ -6,7 +6,7 @@
   "scripts": {
     "watch": "nodemon server/app.js",
     "test": "jest",
-    "eslint": "eslint --ignore-pattern node_modules './**/*.{js,jsx}'",
+    "eslint": "eslint './**/*.{js,jsx}'",
     "start": "node server/app.js"
   },
   "repository": {
