@@ -5,7 +5,9 @@
   "main": "server/app.js",
   "scripts": {
     "watch": "nodemon server/app.js",
-    "test": "jest --verbose"
+    "test": "jest",
+    "eslint": "eslint --ignore-pattern node_modules './**/*.{js,jsx}'",
+    "start": "node server/app.js"
   },
   "repository": {
     "type": "git",
