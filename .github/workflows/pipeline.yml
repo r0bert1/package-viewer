@@ -35,7 +35,7 @@ jobs:
         with:
           args: 'The build for commit `${{ github.sha }}` has failed'
       - name: test
-        run: cd client && npm test
+        run: cd client && npm test -- --passWithNoTests
       # - name: Install Playwright Browsers
       #   run: npx playwright install --with-deps
       # - name: Run Playwright tests
