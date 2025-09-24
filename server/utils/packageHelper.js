@@ -27,6 +27,10 @@ const sort = () => {
 };
 
 const processPackages = async () => {
+  if (packages.length) {
+    return packages;
+  }
+
   try {
     const rl = createInterface({
       input: createReadStream('server/assets/status.real'),
