@@ -5,7 +5,7 @@ const List = ({ setSelected }) => {
 
   useEffect(() => {
     const getPackages = async () => {
-      const response = await fetch('http://localhost:3001/api/packages');
+      const response = await fetch('/api/packages');
       const data = await response.json();
       setPackages(data);
     };
