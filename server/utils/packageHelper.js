@@ -33,7 +33,7 @@ const processPackages = async () => {
 
   try {
     const rl = createInterface({
-      input: createReadStream('server/assets/status.real'),
+      input: createReadStream('assets/status.real'),
       crlfDelay: Infinity
     });
 
