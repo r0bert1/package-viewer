@@ -13,7 +13,7 @@ app.get('/health', (req, res) => {
   res.send('ok');
 });
 
-app.get('/api/packages', async (req, res) => {
+app.get('/packages', async (req, res) => {
   const packages = await processPackages();
   res.send(packages);
 });

@@ -5,9 +5,16 @@ const List = ({ setSelected }) => {
 
   useEffect(() => {
     const getPackages = async () => {
-      const response = await fetch('/api/packages');
-      const data = await response.json();
-      setPackages(data);
+      try {
+        console.log(process.env.BACKEND_URL);
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/packages`
+        );
+        const data = await response.json();
+        setPackages(data);
+      } catch (e) {
+        console.log(e);
+      }
     };
     getPackages();
   }, []);
