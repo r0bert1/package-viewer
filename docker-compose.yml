@@ -1,0 +1,27 @@
+services:
+  server:
+    image: package-viewer-server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    volumes:
+      - ./server/:/usr/src/app
+    container_name: package-viewer-server
+  client:
+    image: package-viewer-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    volumes:
+      - ./client/:/usr/src/app
+    container_name: package-viewer-client
+  nginx:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    container_name: reverse-proxy
+    depends_on:
+      - client
+      - server
